@@ -10,7 +10,7 @@ exports.login = async (req, res) => {
     const result = await pool.query(queries.findUser, [email]);
 
     if (result.rows.length === 0) {
-      return res.status(400).send("no such user");
+      return res.status(400).json("no such user");
     }
 
     const user = result.rows[0];
@@ -20,20 +20,11 @@ exports.login = async (req, res) => {
       return res.status(400).json({ message: "wrong password" });
     }
 
-    const token = jwt.sign({ id: user.id }, "test-key", {
+    const token = jwt.sign({ id: user.id, email: user.email }, "test-key", {
       expiresIn: "1h",
     });
-    // res.status(200).json({ message: "success", token });
 
-    return res
-      .cookie("token", token, {
-        httpOnly: true,
-        secure: process.env.NODE_ENV === "production",
-        maxAge: 3600000,
-        sameSite: "strict",
-      })
-      .status(200)
-      .redirect("/chat");
+    return res.status(200).json({ message: "Login successful", token });
   } catch (error) {
     res
       .status(500)
@@ -42,18 +33,18 @@ exports.login = async (req, res) => {
 };
 
 exports.register = async (req, res) => {
-  const { name, email, password } = req.body;
+  const { userName, email, password } = req.body;
   try {
     const user = await pool.query(queries.checkEmailExists, [email]);
 
     if (user.rows.length > 0) {
-      return res.status(409).send("Email already exists");
+      return res.status(409).json({ message: "Email already exists" });
     }
 
     const hashedPass = await bcrypt.hash(password, 10);
 
     await pool.query(queries.newUser, [
-      name,
+      userName,
       email,
       hashedPass,
       "https://cdn-icons-png.flaticon.com/512/149/149452.png",

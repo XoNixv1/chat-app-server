@@ -7,14 +7,19 @@ const coockieParser = require("cookie-parser");
 
 const app = express();
 
-app.use(cors());
+app.use(
+  cors({
+    origin: "http://localhost:3000",
+    credentials: true,
+  })
+);
 app.use(express.json());
 app.use(coockieParser());
 
 app.use("/auth", authRoutes);
 
 //routes
-app.get("/chat", checkToken, (req, res) => {
+app.get("/", (req, res) => {
   res.send("ВЕЛКУМ");
 });
 

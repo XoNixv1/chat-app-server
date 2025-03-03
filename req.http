@@ -2,7 +2,7 @@
 # Content-Type: application/json
 
 # {
-#   "name": "Test",
+#   "userName": "Test",
 #   "email": "user@example.com",
 #   "password": "password123"
 # }

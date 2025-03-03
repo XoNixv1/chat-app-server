@@ -2,12 +2,11 @@ const { Router } = require("express");
 const router = Router();
 const path = require("path");
 
+const varifyToken = require("../middleware/auth");
 const { login, register } = require("../controllers/authController");
 
 router.post("/login", login);
 router.post("/register", register);
-router.get("/login", (req, res) => {
-  res.sendFile(path.join(__dirname + "../../../login.html"));
-});
+router.post("/varify", varifyToken);
 
 module.exports = router;
