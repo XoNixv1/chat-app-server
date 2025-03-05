@@ -1,5 +1,5 @@
 const bcrypt = require("bcryptjs");
-const queries = require("./authQueries");
+const queries = require("../queries/authQueries");
 const pool = require("../config/db");
 const jwt = require("jsonwebtoken");
 
@@ -20,11 +20,13 @@ exports.login = async (req, res) => {
       return res.status(400).json({ message: "wrong password" });
     }
 
-    const token = jwt.sign({ id: user.id, email: user.email }, "test-key", {
-      expiresIn: "1h",
+    const token = jwt.sign({ id: user.id }, "test-key", {
+      expiresIn: "12h",
     });
 
-    return res.status(200).json({ message: "Login successful", token });
+    return res
+      .status(200)
+      .json({ message: "Login successful", token, id: user.id });
   } catch (error) {
     res
       .status(500)
@@ -47,7 +49,7 @@ exports.register = async (req, res) => {
       userName,
       email,
       hashedPass,
-      "https://cdn-icons-png.flaticon.com/512/149/149452.png",
+      "https://png.pngtree.com/element_our/20190529/ourmid/pngtree-user-icon-image_1187018.jpg",
     ]);
 
     res.status(201).json({ message: "user created succesfully", email });

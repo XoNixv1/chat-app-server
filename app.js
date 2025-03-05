@@ -1,8 +1,7 @@
 const express = require("express");
 const cors = require("cors");
-// const userRoutes = require("./src/routes/userRoutes");
+const userRoutes = require("./src/routes/userRoutes");
 const authRoutes = require("./src/routes/authRoutes");
-const checkToken = require("./src/middleware/auth");
 const coockieParser = require("cookie-parser");
 
 const app = express();
@@ -16,11 +15,9 @@ app.use(
 app.use(express.json());
 app.use(coockieParser());
 
-app.use("/auth", authRoutes);
-
-//routes
-app.get("/", (req, res) => {
-  res.send("ВЕЛКУМ");
-});
+//auth routes
+app.use("/api/auth", authRoutes);
+//user routes
+app.use("/api/user", userRoutes);
 
 module.exports = app;

@@ -1,4 +1,4 @@
-# POST http://localhost:3001/auth/register
+# POST http://localhost:3001/api/auth/register
 # Content-Type: application/json
 
 # {
@@ -7,7 +7,7 @@
 #   "password": "password123"
 # }
 
-POST http://localhost:3001/auth/login
+POST http://localhost:3001/api/auth/login
 Content-Type: application/json
 
 {
@@ -15,4 +15,4 @@ Content-Type: application/json
   "password": "password123"
 }
 
-# GET http://localhost:3001/
+# GET http://localhost:3001/api/user/userData/

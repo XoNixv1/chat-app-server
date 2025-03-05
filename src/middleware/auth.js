@@ -1,6 +1,6 @@
 const jwt = require("jsonwebtoken");
 const pool = require("../config/db");
-const queries = require("../controllers/authQueries");
+const queries = require("../queries/authQueries");
 
 async function varifyToken(req, res) {
   const authHeader = req.headers.authorization;

@@ -1,6 +1,5 @@
 const { Router } = require("express");
 const router = Router();
-const path = require("path");
 
 const varifyToken = require("../middleware/auth");
 const { login, register } = require("../controllers/authController");
