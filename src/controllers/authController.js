@@ -36,6 +36,7 @@ exports.login = async (req, res) => {
 
 exports.register = async (req, res) => {
   const { userName, email, password } = req.body;
+  console.log(req.body);
   try {
     const user = await pool.query(queries.checkEmailExists, [email]);
 

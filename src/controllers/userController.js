@@ -52,8 +52,6 @@ exports.getUser = async (req, res) => {
     const userData = await pool.query(getUserData, [id]);
     const userContacts = await pool.query(getContacts, [id]);
 
-    console.log(userContacts.rows, userData.rows);
-
     if (userData.rows && userContacts.rows) {
       return res
         .status(201)

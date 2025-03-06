@@ -4,6 +4,6 @@ const router = Router();
 
 router.post("/addUser", addContact);
 //
-router.get("/userData/", getUser);
+router.get("/userData", getUser);
 
 module.exports = router;
