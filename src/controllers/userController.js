@@ -6,29 +6,42 @@ const {
   getContacts,
   checkEmailandData,
 } = require("../queries/userQueries");
+const { getChatByUsers } = require("../queries/chatQueries");
 
 //adding new CONTACT
 exports.addContact = async (req, res) => {
-  const { email } = req.body;
+  const { user1_id, email } = req.body;
   try {
-    const check = await pool.query(checkEmailandData, [email]);
+    const receiverRows = await pool.query(checkEmailandData, [email]);
+    const receiver = receiverRows.rows[0];
 
-    if (check.rows.length === 0) {
+    if (receiverRows.rows.length === 0) {
       return res.status(404).json({ message: "User not found" });
     }
 
+    const senderRows = await pool.query(getUserData, [user1_id]);
+    const sender = senderRows.rows[0];
+
     const result = await pool.query(addNewContact, [
-      req.id,
-      check.rows[0].id,
-      check.rows[0].contact_email,
-      check.rows[0].contact_name,
-      check.rows[0].photo_url,
+      sender.id,
+      receiver.id,
+      sender.name,
+      receiver.name,
+      sender.email,
+      receiver.email,
+      sender.photo_url,
+      receiver.photo_url,
     ]);
 
     if (result.rowCount > 0) {
+      const newChatRows = await pool.query(getChatByUsers, [
+        sender.id,
+        receiver.id,
+      ]);
+      const newChat = newChatRows.rows[0];
       return res
         .status(201)
-        .json({ message: "User added to chat successfully" });
+        .json({ message: "User added to chat successfully", newChat });
     } else {
       return res.status(400).json({ message: "Failed to add user to chat" });
     }
