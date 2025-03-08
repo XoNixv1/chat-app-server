@@ -5,6 +5,7 @@ const {
   getUserData,
   getContacts,
   checkEmailandData,
+  checkExistingContact,
 } = require("../queries/userQueries");
 const { getChatByUsers } = require("../queries/chatQueries");
 
@@ -12,7 +13,8 @@ const { getChatByUsers } = require("../queries/chatQueries");
 exports.addContact = async (req, res) => {
   const { user1_id, email } = req.body;
   try {
-    const receiverRows = await pool.query(checkEmailandData, [email]);
+    // check if exist
+    const receiverRows = await pool.query(checkEmailandData, [email, user1_id]);
     const receiver = receiverRows.rows[0];
 
     if (receiverRows.rows.length === 0) {
@@ -22,11 +24,22 @@ exports.addContact = async (req, res) => {
     const senderRows = await pool.query(getUserData, [user1_id]);
     const sender = senderRows.rows[0];
 
+    //check if already added
+    const existingContactRows = await pool.query(checkExistingContact, [
+      sender.id,
+      receiver.id,
+    ]);
+
+    if (existingContactRows.rows.length > 0) {
+      return res.status(400).json({ message: "Contact already exists" });
+    }
+
+    // adding
     const result = await pool.query(addNewContact, [
       sender.id,
       receiver.id,
-      sender.name,
-      receiver.name,
+      sender.user_name,
+      receiver.user_name,
       sender.email,
       receiver.email,
       sender.photo_url,
@@ -39,6 +52,7 @@ exports.addContact = async (req, res) => {
         receiver.id,
       ]);
       const newChat = newChatRows.rows[0];
+      console.log(newChat);
       return res
         .status(201)
         .json({ message: "User added to chat successfully", newChat });
@@ -46,7 +60,9 @@ exports.addContact = async (req, res) => {
       return res.status(400).json({ message: "Failed to add user to chat" });
     }
   } catch (error) {
-    return res.status(500).json({ message: "Internal server error" });
+    return res
+      .status(500)
+      .json({ message: "Internal server error", error: error });
   }
 };
 

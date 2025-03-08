@@ -4,11 +4,14 @@ const getUserData =
   "SELECT id, email, user_name, photo_url FROM users WHERE id = $1";
 const getContacts = "SELECT * FROM chats WHERE user1_id = $1 OR user2_id = $1";
 const checkEmailandData =
-  "SELECT photo_url, user_name FROM users WHERE email = $1";
+  "SELECT id, email, user_name, photo_url FROM users WHERE email = $1 AND id <> $2";
+const checkExistingContact =
+  "SELECT * FROM chats WHERE (user1_id = $1 AND user2_id = $2) OR (user1_id = $2 AND user2_id = $1);";
 
 module.exports = {
   addNewContact,
   getUserData,
   getContacts,
   checkEmailandData,
+  checkExistingContact,
 };

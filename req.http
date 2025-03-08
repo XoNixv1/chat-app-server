@@ -17,7 +17,15 @@
 
 # GET http://localhost:3001/api/user/userData/
 
-GET http://localhost:3001/api/user/addUser?user1_id=91e281fd-74b7-40a3-86c2-f9ce4628d2b3&email=test1@example.com
+# GET http://localhost:3001/api/user/addUser?user1_id=91e281fd-74b7-40a3-86c2-f9ce4628d2b3&email=test1@example.com
 
 # userTest2@ss
 # 12345
+
+POST http://localhost:3001/api/user/addUser
+Content-Type: application/json
+
+{
+  "user1_id": "af36ac5e-f7b1-4b7a-90b4-36116318fe5d",
+  "email": "test1@example.com"
+}
