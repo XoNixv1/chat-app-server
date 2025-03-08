@@ -17,7 +17,7 @@
 
 # GET http://localhost:3001/api/user/userData/
 
-GET http://localhost:3001/api/chat/messages?chat_id=7760ce23-610a-4457-8c50-31e5abfc40f4
+GET http://localhost:3001/api/user/addUser?user1_id=91e281fd-74b7-40a3-86c2-f9ce4628d2b3&email=test1@example.com
 
-userTest2@ss
-12345
+# userTest2@ss
+# 12345
