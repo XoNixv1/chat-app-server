@@ -16,3 +16,40 @@ exports.getMessages = async (req, res) => {
     res.status(500).json({ message: "Error of receiving messages", error });
   }
 };
+
+const gptSendingBack = async (message) => {
+  try {
+    const apiKey = "AIzaSyCzJK6KfhGg1kjJjEdk9JPLBmcoFffxoZI";
+    const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
+
+    const response = await fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        contents: [
+          {
+            parts: [{ text: message }],
+          },
+        ],
+      }),
+    });
+
+    if (!response.ok) {
+      throw new Error(
+        `Gemini API: ${response.status} - ${response.statusText}`
+      );
+    }
+
+    const data = await response.json();
+    const responseText = data.candidates[0].content.parts[0].text;
+    console.log(responseText);
+    return responseText;
+  } catch (error) {
+    console.error("Gemini API:", error.message);
+    throw error;
+  }
+};
+
+exports.gptSendingBack = gptSendingBack;

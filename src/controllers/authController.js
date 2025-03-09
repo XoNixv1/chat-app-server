@@ -2,6 +2,7 @@ const bcrypt = require("bcryptjs");
 const queries = require("../queries/authQueries");
 const pool = require("../config/db");
 const jwt = require("jsonwebtoken");
+const { addContactService } = require("../services/addContactService");
 
 exports.login = async (req, res) => {
   const { email, password } = req.body;
@@ -52,6 +53,15 @@ exports.register = async (req, res) => {
       hashedPass,
       "https://png.pngtree.com/element_our/20190529/ourmid/pngtree-user-icon-image_1187018.jpg",
     ]);
+
+    const newUserIdRows = await pool.query(queries.getUserId, [email]);
+    const { id } = newUserIdRows.rows[0];
+
+    const addingGpt = await addContactService({
+      user1_id: id,
+      email: "@chatgpt.com",
+    });
+    console.log(addingGpt);
 
     res.status(201).json({ message: "user created succesfully", email });
   } catch (error) {

@@ -20,6 +20,8 @@ const io = socketIo(server, {
   transports: ["websocket", "polling"],
 });
 
+app.locals.io = io;
+
 io.on("connection", (socket) => {
   setupSocket(io, socket);
 });
