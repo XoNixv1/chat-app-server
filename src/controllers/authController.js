@@ -3,6 +3,8 @@ const queries = require("../queries/authQueries");
 const pool = require("../config/db");
 const jwt = require("jsonwebtoken");
 const { addContactService } = require("../services/addContactService");
+require("dotenv").config();
+const jwtKey = process.env.JWT_SECRET;
 
 exports.login = async (req, res) => {
   const { email, password } = req.body;
@@ -21,7 +23,7 @@ exports.login = async (req, res) => {
       return res.status(400).json({ message: "wrong password" });
     }
 
-    const token = jwt.sign({ id: user.id }, "test-key", {
+    const token = jwt.sign({ id: user.id }, jwtKey, {
       expiresIn: "12h",
     });
 
@@ -51,7 +53,7 @@ exports.register = async (req, res) => {
       userName,
       email,
       hashedPass,
-      "https://png.pngtree.com/element_our/20190529/ourmid/pngtree-user-icon-image_1187018.jpg",
+      "https://cdn.iconscout.com/icon/free/png-256/free-account-icon-download-in-svg-png-gif-file-formats--profile-user-avatar-travel-pack-holidays-icons-1538680.png?f=webp",
     ]);
 
     const newUserIdRows = await pool.query(queries.getUserId, [email]);

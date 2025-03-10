@@ -32,7 +32,7 @@ exports.setupSocket = (io, socket) => {
 
       const newGptMessage = await saveMessage(
         id,
-        "e23aa24b-4d4a-4c43-abf4-474f57b35ee7",
+        "9b387d20-a231-4168-836a-badb8d61782e",
         gptMessage
       );
       //displaying message

@@ -1,6 +1,8 @@
 const jwt = require("jsonwebtoken");
 const pool = require("../config/db");
 const queries = require("../queries/authQueries");
+require("dotenv").config();
+const jwtKey = process.env.JWT_SECRET;
 
 async function varifyToken(req, res) {
   const authHeader = req.headers.authorization;
@@ -14,7 +16,7 @@ async function varifyToken(req, res) {
   }
 
   try {
-    const decoded = jwt.verify(token, "test-key");
+    const decoded = jwt.verify(token, jwtKey);
     const result = await pool.query(queries.findUserById, [decoded.id]);
 
     if (result.rows.length === 0) {

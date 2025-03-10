@@ -22,10 +22,18 @@
 # userTest2@ss
 # 12345
 
-POST http://localhost:3001/api/user/addUser
+# POST http://localhost:3001/api/user/addUser
+# Content-Type: application/json
+
+# {
+#   "user1_id": "af36ac5e-f7b1-4b7a-90b4-36116318fe5d",
+#   "email": "test1@example.com"
+# }
+
+POST http://localhost:3001/api/user/changeImage
 Content-Type: application/json
 
 {
-  "user1_id": "af36ac5e-f7b1-4b7a-90b4-36116318fe5d",
-  "email": "test1@example.com"
+  "userId": "da890174-6490-41b5-9d6e-aeded227512f",
+  "imageURL": "https://i0.wp.com/plopdo.com/wp-content/uploads/2021/11/feature-pic.jpg?fit=537%2C322&ssl=1"
 }
