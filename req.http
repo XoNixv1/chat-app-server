@@ -26,8 +26,9 @@
 # Content-Type: application/json
 
 # {
-#   "user1_id": "af36ac5e-f7b1-4b7a-90b4-36116318fe5d",
-#   "email": "test1@example.com"
+#   "user1_id": 1383e3b6-f6d8-4fc7-97b3-bdaca3af45c1,
+#   "email": test1@asd.c
+#   12345
 # }
 
 POST http://localhost:3001/api/user/changeImage

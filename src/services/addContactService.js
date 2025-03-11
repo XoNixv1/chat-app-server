@@ -17,7 +17,6 @@ exports.addContactService = async ({ user1_id, email }) => {
 
   const senderRows = await pool.query(getUserData, [user1_id]);
   const sender = senderRows.rows[0];
-  console.log(`sender:`, sender, `receiver:`, receiver);
 
   const existingContactRows = await pool.query(checkExistingContact, [
     sender.id,
@@ -27,7 +26,6 @@ exports.addContactService = async ({ user1_id, email }) => {
   if (existingContactRows.rows.length > 0) {
     throw new Error("Contact already exists");
   }
-  console.log(`sender:`, sender, `receiver:`, receiver);
   const result = await pool.query(addNewContact, [
     sender.id,
     receiver.id,

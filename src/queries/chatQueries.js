@@ -4,9 +4,11 @@ const socketMessage =
   "INSERT INTO messages (chat_id, sender_id, message_text) VALUES ($1, $2, $3) RETURNING *";
 const getChatByUsers =
   "SELECT * FROM chats WHERE user1_id = $1 AND user2_id = $2";
+const deleteFullMessagesByChatId = "DELETE FROM messages WHERE chat_id = $1";
 
 module.exports = {
   getChatMessages,
   socketMessage,
   getChatByUsers,
+  deleteFullMessagesByChatId,
 };

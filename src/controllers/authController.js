@@ -1,31 +1,27 @@
-const bcrypt = require("bcryptjs");
-const queries = require("../queries/authQueries");
-const pool = require("../config/db");
-const jwt = require("jsonwebtoken");
 const { addContactService } = require("../services/addContactService");
+const { createNewUserService } = require("../services/createNewUserService");
+const {
+  getUserIdByEmailService,
+} = require("../services/getUserIdByEmailService");
+const { getUserDataByEmail } = require("../services/getUserDataByEmail");
+const { IsValidPass } = require("../services/validPassCheck");
+const { createToken } = require("../services/createToken");
 require("dotenv").config();
-const jwtKey = process.env.JWT_SECRET;
 
 exports.login = async (req, res) => {
   const { email, password } = req.body;
 
   try {
-    const result = await pool.query(queries.findUser, [email]);
+    const user = await getUserDataByEmail(email);
 
-    if (result.rows.length === 0) {
-      return res.status(400).json("no such user");
+    if (!user) {
+      return res.status(404).json({ message: "user not found" });
     }
-
-    const user = result.rows[0];
-
-    const isPasswordValid = await bcrypt.compare(password, user.password);
-    if (!isPasswordValid) {
+    if ((await IsValidPass(password, user.password)) === false) {
       return res.status(400).json({ message: "wrong password" });
     }
 
-    const token = jwt.sign({ id: user.id }, jwtKey, {
-      expiresIn: "12h",
-    });
+    const token = createToken(user.id);
 
     return res
       .status(200)
@@ -39,31 +35,19 @@ exports.login = async (req, res) => {
 
 exports.register = async (req, res) => {
   const { userName, email, password } = req.body;
-  console.log(req.body);
   try {
-    const user = await pool.query(queries.checkEmailExists, [email]);
-
-    if (user.rows.length > 0) {
+    if (await checkEmailService(email)) {
       return res.status(409).json({ message: "Email already exists" });
     }
 
-    const hashedPass = await bcrypt.hash(password, 10);
+    await createNewUserService(userName, email, password);
 
-    await pool.query(queries.newUser, [
-      userName,
-      email,
-      hashedPass,
-      "https://cdn.iconscout.com/icon/free/png-256/free-account-icon-download-in-svg-png-gif-file-formats--profile-user-avatar-travel-pack-holidays-icons-1538680.png?f=webp",
-    ]);
-
-    const newUserIdRows = await pool.query(queries.getUserId, [email]);
-    const { id } = newUserIdRows.rows[0];
+    const id = await getUserIdByEmailService(email);
 
     const addingGpt = await addContactService({
       user1_id: id,
       email: "@chatgpt.com",
     });
-    console.log(addingGpt);
 
     res.status(201).json({ message: "user created succesfully", email });
   } catch (error) {

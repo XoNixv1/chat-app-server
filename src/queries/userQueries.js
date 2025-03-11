@@ -13,6 +13,8 @@ const changeUserImageInContacts = `UPDATE chats
     user1_photo_url = CASE WHEN user1_id = $1 THEN $2 ELSE user1_photo_url END,
     user2_photo_url = CASE WHEN user2_id = $1 THEN $2 ELSE user2_photo_url END
   WHERE user1_id = $1 OR user2_id = $1`;
+const deleteContactById = "DELETE FROM chats WHERE id = $1";
+
 module.exports = {
   addNewContact,
   getUserData,
@@ -21,4 +23,5 @@ module.exports = {
   checkExistingContact,
   changeUserImage,
   changeUserImageInContacts,
+  deleteContactById,
 };

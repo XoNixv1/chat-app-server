@@ -7,6 +7,7 @@ const {
   changeUserImageInContacts,
 } = require("../queries/userQueries");
 const { addContactService } = require("../services/addContactService");
+const { removeContactService } = require("../services/removeContactService");
 //
 require("dotenv").config();
 const jwtKey = process.env.JWT_SECRET;
@@ -66,5 +67,18 @@ exports.changeImage = async (req, res) => {
     }
   } catch (error) {
     res.status(500).json({ error });
+  }
+};
+
+exports.deleteContact = async (req, res) => {
+  const { id } = req.body;
+  try {
+    const result = await removeContactService({
+      id,
+    });
+    if (result) return res.status(200);
+    return res.status(404);
+  } catch (error) {
+    return res.status(500).json({ error: error.message });
   }
 };
