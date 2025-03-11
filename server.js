@@ -13,7 +13,7 @@ const server = http.createServer(app);
 
 const io = socketIo(server, {
   cors: {
-    origin: "http://localhost:3000",
+    origin: "chat-app-front-production.up.railway.app",
     methods: ["GET", "POST"],
     credentials: true,
   },
@@ -28,7 +28,7 @@ io.on("connection", (socket) => {
 
 app.use(
   cors({
-    origin: "http://localhost:3000",
+    origin: "chat-app-front-production.up.railway.app",
     credentials: true,
   })
 );
@@ -43,7 +43,7 @@ app.use("/api/user", userRoutes);
 app.use("/api/chat", chatRoutes);
 
 //
-const port = 3001;
+const port = process.env.PORT || 3001;
 server.listen(port, () => {
-  console.log(`http://localhost:${port}`);
+  console.log(`Server running on port ${port}`);
 });
