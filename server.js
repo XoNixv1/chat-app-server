@@ -4,10 +4,10 @@ const userRoutes = require("./src/routes/userRoutes");
 const authRoutes = require("./src/routes/authRoutes");
 const chatRoutes = require("./src/routes/chatRoutes");
 const http = require("http");
-const coockieParser = require("cookie-parser");
 const socketIo = require("socket.io");
 const { setupSocket } = require("./src/socket/chatSocket");
 const pool = require("./src/config/db");
+const cookieParser = require("cookie-parser");
 
 const app = express();
 const server = http.createServer(app);
@@ -34,7 +34,7 @@ app.use(
   })
 );
 app.use(express.json());
-app.use(coockieParser());
+app.use(cookieParser());
 
 //auth routes
 app.use("/api/auth", authRoutes);
