@@ -30,7 +30,7 @@ exports.login = async (req, res) => {
       httpOnly: true,
       secure: true,
       maxAge: 43200,
-      sameSite: "none",
+      same_site: "none",
       path: "/",
     });
 
