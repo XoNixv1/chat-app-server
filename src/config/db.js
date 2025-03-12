@@ -9,16 +9,9 @@ const pool = new Pool({
   user: "xonix",
   database: "chat_app_db_7n7i",
   port: 5432,
+  ssl: {
+    rejectUnauthorized: false,
+  },
 });
-
-pool
-  .connect()
-  .then(() => {
-    console.log("Connected to the database successfully!");
-    client.end();
-  })
-  .catch((err) => {
-    console.error("Connection to the database failed:", err);
-  });
 
 module.exports = pool;
