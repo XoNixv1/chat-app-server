@@ -6,6 +6,7 @@ const {
 const { getUserDataByEmail } = require("../services/getUserDataByEmail");
 const { IsValidPass } = require("../services/validPassCheck");
 const { createToken } = require("../services/createToken");
+const { checkEmailService } = require("../services/checkEmail.service");
 require("dotenv").config();
 
 exports.login = async (req, res) => {
@@ -35,7 +36,7 @@ exports.login = async (req, res) => {
 
 exports.register = async (req, res) => {
   const { userName, email, password } = req.body;
-  console.log("Request body:", req.body);
+
   try {
     if (await checkEmailService(email)) {
       return res.status(409).json({ message: "Email already exists" });
