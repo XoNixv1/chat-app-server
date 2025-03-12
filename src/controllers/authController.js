@@ -31,6 +31,7 @@ exports.login = async (req, res) => {
       secure: true,
       maxAge: 43200,
       sameSite: "none",
+      path: "/",
     });
 
     return res.status(200).json({ message: "Login successful", id: user.id });
