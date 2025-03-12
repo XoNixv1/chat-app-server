@@ -25,17 +25,14 @@ exports.addContact = async (req, res) => {
 
 // giving user data to client side
 exports.getUser = async (req, res) => {
-  const token = req.cookies.chat_token;
-  console.log(token);
-  console.log(req.cookies);
-  if (!token) {
-    return res.status(401).json({ message: "Not authenticated", token });
+  const id = req.params.id;
+  console.log(id);
+
+  if (!id) {
+    return res.status(401).json({ message: "Not authenticated", id });
   }
 
   try {
-    const decoded = jwt.verify(token, jwtKey);
-    const id = decoded.id;
-
     const userData = await pool.query(getUserData, [id]);
     const userContacts = await pool.query(getContacts, [id]);
 

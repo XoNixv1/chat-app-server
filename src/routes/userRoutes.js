@@ -9,7 +9,7 @@ const router = Router();
 
 router.post("/addUser", addContact);
 router.post("/deleteContact", deleteContact);
-router.get("/userData", getUser);
+router.get("/userData/:id", getUser);
 router.post("/changeImage", changeImage);
 
 module.exports = router;

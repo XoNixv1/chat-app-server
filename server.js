@@ -9,12 +9,15 @@ const { setupSocket } = require("./src/socket/chatSocket");
 const pool = require("./src/config/db");
 const cookieParser = require("cookie-parser");
 
+require("dotenv").config();
+const front = process.env.FRONT;
+
 const app = express();
 const server = http.createServer(app);
 
 const io = socketIo(server, {
   cors: {
-    origin: "https://chat-app-front-production.up.railway.app",
+    origin: `${front}`,
     methods: ["GET", "POST"],
     credentials: true,
   },
@@ -29,7 +32,7 @@ io.on("connection", (socket) => {
 
 app.use(
   cors({
-    origin: "https://chat-app-front-production.up.railway.app",
+    origin: `${front}`,
     credentials: true,
   })
 );
