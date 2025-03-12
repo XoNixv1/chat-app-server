@@ -7,15 +7,15 @@
 #   "password": "password123"
 # }
 
-# POST https://chat-app-server-production-1070.up.railway.app/api/auth/login
-# Content-Type: application/json
+POST https://chat-app-server-production-04bc.up.railway.app:3123/api/auth/login
+Content-Type: application/json
 
-# {
-#   "email": "user@example.com",
-#   "password": "password123"
-# }
+{
+  "email": "test1@asd.c",
+  "password": "12345"
+}
 
-GET https://chat-app-server-production-04bc.up.railway.app:3123/healthcheck
+# GET https://chat-app-server-production-04bc.up.railway.app/healthcheck
 
 # GET http://localhost:3123/healthcheck
 
