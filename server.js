@@ -14,7 +14,7 @@ const server = http.createServer(app);
 
 const io = socketIo(server, {
   cors: {
-    origin: "https://chat-app-front-production.up.railway.app/",
+    origin: "https://chat-app-front-production.up.railway.app",
     methods: ["GET", "POST"],
     credentials: true,
   },
@@ -29,7 +29,7 @@ io.on("connection", (socket) => {
 
 app.use(
   cors({
-    origin: "https://chat-app-front-production.up.railway.app/",
+    origin: "https://chat-app-front-production.up.railway.app",
     credentials: true,
   })
 );
