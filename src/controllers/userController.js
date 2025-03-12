@@ -1,4 +1,3 @@
-const jwt = require("jsonwebtoken");
 const pool = require("../config/db");
 const {
   getUserData,
@@ -10,7 +9,6 @@ const { addContactService } = require("../services/addContactService");
 const { removeContactService } = require("../services/removeContactService");
 //
 require("dotenv").config();
-const jwtKey = process.env.JWT_SECRET;
 
 //adding new CONTACT
 exports.addContact = async (req, res) => {
@@ -26,7 +24,6 @@ exports.addContact = async (req, res) => {
 // giving user data to client side
 exports.getUser = async (req, res) => {
   const id = req.params.id;
-  console.log(id);
 
   if (!id) {
     return res.status(401).json({ message: "Not authenticated", id });

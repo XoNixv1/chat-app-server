@@ -24,17 +24,17 @@ exports.login = async (req, res) => {
 
     const token = createToken(user.id);
 
-    console.log(token);
+    // res.cookie("chat_token", token, {
+    //   httpOnly: true,
+    //   secure: true,
+    //   maxAge: 43200,
+    //   same_site: "none",
+    //   domain: ".railway.app",
+    // });
 
-    res.cookie("chat_token", token, {
-      httpOnly: true,
-      secure: true,
-      maxAge: 43200,
-      same_site: "none",
-      domain: ".railway.app",
-    });
-
-    return res.status(200).json({ message: "Login successful", id: user.id });
+    return res
+      .status(200)
+      .json({ message: "Login successful", token, id: user.id });
   } catch (error) {
     res
       .status(500)
