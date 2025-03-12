@@ -7,6 +7,7 @@ const http = require("http");
 const coockieParser = require("cookie-parser");
 const socketIo = require("socket.io");
 const { setupSocket } = require("./src/socket/chatSocket");
+const pool = require("./src/config/db");
 
 const app = express();
 const server = http.createServer(app);
