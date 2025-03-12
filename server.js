@@ -15,6 +15,8 @@ const front = process.env.FRONT;
 const app = express();
 const server = http.createServer(app);
 
+app.set("trust proxy", true);
+
 const io = socketIo(server, {
   cors: {
     origin: `${front}`,
@@ -36,6 +38,7 @@ app.use(
     credentials: true,
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"],
+    exposedHeaders: ["set-cookie"],
   })
 );
 app.use(express.json());
