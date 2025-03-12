@@ -23,7 +23,7 @@ async function varifyToken(req, res) {
 
     return res.status(200).json({
       message: "valid Token",
-      currentUser: result.rows,
+      currentUser: result.rows[0],
       userId: decoded.id,
       contacts: userContacts.rows,
     });
