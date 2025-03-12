@@ -11,4 +11,14 @@ const pool = new Pool({
   port: 5432,
 });
 
+pool
+  .connect()
+  .then(() => {
+    console.log("Connected to the database successfully!");
+    client.end();
+  })
+  .catch((err) => {
+    console.error("Connection to the database failed:", err);
+  });
+
 module.exports = pool;
