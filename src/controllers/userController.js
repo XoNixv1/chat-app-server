@@ -26,8 +26,8 @@ exports.addContact = async (req, res) => {
 // giving user data to client side
 exports.getUser = async (req, res) => {
   const token = req.cookies.chat_token;
-  console.log(req);
   console.log(token);
+  console.log(req.cookies);
   if (!token) {
     return res.status(401).json({ message: "Not authenticated", token });
   }
