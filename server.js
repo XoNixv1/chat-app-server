@@ -42,6 +42,18 @@ app.use("/api/user", userRoutes);
 //chat routes
 app.use("/api/chat", chatRoutes);
 
+app.get("/healthcheck", async (req, res) => {
+  try {
+    const client = await pool.connect();
+    const result = await client.query("SELECT NOW()");
+    client.release();
+    res.status(200).json({ status: "ok", time: result.rows[0].now });
+  } catch (err) {
+    console.error("Healthcheck error:", err);
+    res.status(500).json({ status: "error", error: err.message });
+  }
+});
+
 //
 const port = process.env.PORT || 3001;
 server.listen(port, () => {
