@@ -31,7 +31,7 @@ exports.login = async (req, res) => {
       secure: true,
       maxAge: 43200,
       same_site: "none",
-      domain: ".up.railway.app",
+      domain: ".railway.app",
     });
 
     return res.status(200).json({ message: "Login successful", id: user.id });
