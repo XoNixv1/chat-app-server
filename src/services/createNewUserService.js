@@ -1,4 +1,5 @@
 const pool = require("../config/db");
+const bcrypt = require("bcryptjs");
 const { newUser } = require("../queries/authQueries");
 
 const standardImage =
