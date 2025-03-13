@@ -12,7 +12,7 @@ exports.addContactService = async ({ user1_id, email }) => {
   const receiver = receiverRows.rows[0];
 
   if (receiverRows.rows.length === 0) {
-    throw new Error("User not found");
+    return "user not found";
   }
 
   const senderRows = await pool.query(getUserData, [user1_id]);

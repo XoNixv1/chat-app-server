@@ -1,13 +1,13 @@
-# POST http://localhost:3001/api/auth/register
+# POST https://chat-app-server-production-04bc.up.railway.app/api/auth/register
 # Content-Type: application/json
 
 # {
-#   "userName": "Test",
-#   "email": "user@example.com",
-#   "password": "password123"
+#   "userName": "testUser1",
+#   "email": "testUser1@ss.com",
+#   "password": "1234asd"
 # }
 
-POST https://chat-app-server-production-04bc.up.railway.app:3123/api/auth/login
+POST https://chat-app-server-production-04bc.up.railway.app/api/auth/login
 Content-Type: application/json
 
 {
@@ -16,6 +16,8 @@ Content-Type: application/json
 }
 
 # GET https://chat-app-server-production-04bc.up.railway.app/healthcheck
+
+# GET https://chat-app-server-production-04bc.up.railway.app/user/userData
 
 # GET http://localhost:3123/healthcheck
 
